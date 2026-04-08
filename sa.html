@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/2764.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Korangiiiiiiii!</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #ffccd5;
+            --gold: #ffb703;
+            --cake-vanilla: #f4d35e;
+            --cake-cream: #ff8fa3;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fff0f3, #ffccd5);
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Background Decorations */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Hero Header */
+        .hero {
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeIn 2s ease-in;
+            z-index: 10;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            font-size: 3.5rem;
+            text-shadow: 2px 2px #fff;
+            margin-bottom: 10px;
+        }
+
+        .hint {
+            font-size: 1.1rem;
+            color: #d63384;
+            font-style: italic;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- THE BEAUTIFUL CAKE --- */
+        .cake-container {
+            position: relative;
+            cursor: pointer;
+            margin: 100px 0 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .cake-container:hover {
+            transform: scale(1.02);
+        }
+
+        .cake {
+            position: relative;
+            width: 250px;
+            height: 180px;
+            background: var(--cake-vanilla);
+            border-radius: 10px;
+            box-shadow: inset 0 -15px 0 rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.1);
+            background-image: 
+                linear-gradient(to bottom, 
+                    transparent 40px, var(--cake-cream) 40px, var(--cake-cream) 50px, 
+                    transparent 50px, transparent 90px, var(--cake-cream) 90px, var(--cake-cream) 100px,
+                    transparent 100px);
+        }
+
+        .frosting-top {
+            position: absolute;
+            top: -15px;
+            left: -5px;
+            width: 260px;
+            height: 50px;
+            background: #ffffff;
+            border-radius: 50px 50px 10px 10px;
+        }
+
+        /* Sprinkles on frosting */
+        .frosting-top::after {
+            content: "";
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle, #ff4d6d 2px, transparent 2px),
+                radial-gradient(circle, #ffb703 2px, transparent 2px),
+                radial-gradient(circle, #4ea8de 2px, transparent 2px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px, 5px 15px;
+            opacity: 0.5;
+        }
+
+        .drip {
+            position: absolute;
+            top: 25px;
+            width: 25px;
+            background: #ffffff;
+            border-radius: 0 0 20px 20px;
+        }
+        .drip-1 { left: 10px; height: 45px; }
+        .drip-2 { left: 60px; height: 30px; }
+        .drip-3 { left: 110px; height: 55px; }
+        .drip-4 { left: 170px; height: 35px; }
+        .drip-5 { left: 220px; height: 45px; }
+
+        .candle {
+            width: 12px;
+            height: 60px;
+            background: linear-gradient(to right, #74c0fc, #a5d8ff);
+            position: absolute;
+            top: -65px;
+            left: 119px;
+            border-radius: 3px;
+        }
+
+        .flame {
+            width: 20px;
+            height: 30px;
+            background: #ffb703;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -35px;
+            left: -4px;
+            box-shadow: 0 0 20px #ffb703, 0 0 40px #ffb703;
+            animation: dance 0.6s infinite alternate;
+        }
+
+        .flame.out { display: none; }
+
+        .plate {
+            width: 320px;
+            height: 15px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            margin-top: -5px;
+            box-shadow: 0 5px 0 #dee2e6;
+        }
+
+        /* --- LOVE MESSAGE --- */
+        .message-box {
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.2);
+            text-align: center;
+            line-height: 1.8;
+            color: #444;
+            margin: 40px 20px;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid var(--soft-pink);
+        }
+
+        .message-box.reveal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .message-box h2 {
+            color: var(--primary-pink);
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5rem;
+            margin-top: 0;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes dance {
+            from { transform: scale(1) rotate(-3deg); }
+            to { transform: scale(1.1) rotate(3deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            font-size: 2.5rem;
+            animation: floatUp 7s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-130vh) rotate(30deg); opacity: 0; }
+        }
+
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heart-container"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="hero">
+        <h1>Happy Birthday, My Shuttumaniiiiiii muahhhhh thakkuduuzeaaaa!</h1>
+        <p class="hint">Make a wish and click the flame...</p>
+    </div>
+
+    <div class="cake-container" onclick="blowCandle()">
+        <div class="cake">
+            <div class="frosting-top">
+                <div class="drip drip-1"></div>
+                <div class="drip drip-2"></div>
+                <div class="drip drip-3"></div>
+                <div class="drip drip-4"></div>
+                <div class="drip drip-5"></div>
+            </div>
+            <div class="candle">
+                <div class="flame" id="flame"></div>
+            </div>
+        </div>
+        <div class="plate"></div>
+    </div>
+
+    <div class="message-box" id="message">
+        <h2>To My Beautiful Wife,</h2>
+        <p>
+            On this special day, I want to remind you how much you mean to me. 
+            You aren't just the person I share my life with—you are the light that makes every day brighter.
+        </p>
+        <p>
+            Through every laugh, every dream, and every quiet moment, my love for you 
+            grows stronger. Thank you for being your wonderful, amazing self. I love you kuttappi enikk arinjuda enthann,miss you kuttappi kuruthakednn ellam sorry...
+        </p>
+        <p style="font-size: 1.5rem; color: #ff4d6d;">❤️ <strong>I love you forever.</strong> ❤️</p>
+    </div>
+
+    <script>
+        // Generate floating balloons/hearts
+        function createBalloon() {
+            const container = document.getElementById('heart-container');
+            const items = ['🎈', '❤️', '💖', '💕', '✨'];
+            const el = document.createElement('div');
+            el.className = 'balloon';
+            el.innerText = items[Math.floor(Math.random() * items.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            el.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            container.appendChild(el);
+
+            setTimeout(() => el.remove(), 7000);
+        }
+
+        setInterval(createBalloon, 600);
+
+        // Blow out candle interaction
+        function blowCandle() {
+            const flame = document.getElementById('flame');
+            const message = document.getElementById('message');
+            
+            if (!flame.classList.contains('out')) {
+                flame.classList.add('out');
+                message.classList.add('reveal');
+                startPoppers();
+                
+                // Add a little extra sparkle when she blows
+                for(let i=0; i<5; i++) {
+                    setTimeout(startPoppers, i * 300);
+                }
+            }
+        }
+
+        // Confetti Popper Logic
+        function startPoppers() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            const colors = ['#ff4d6d', '#ffb703', '#4ea8de', '#fff', '#ffccd5'];
+
+            for (let i = 0; i < 60; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2 + 50,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 10 + 5,
+                    speedY: Math.random() * -20 - 5,
+                    speedX: Math.random() * 20 - 10,
+                    gravity: 0.25
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.speedY += p.gravity;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size/2, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                if (particles[0].y < canvas.height + 100) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
